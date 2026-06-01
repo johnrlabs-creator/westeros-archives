@@ -1,0 +1,20 @@
+<!-- <p>list works! {{contentType()}}</p> -->
+<strong>{{ listType() }}</strong>
+
+<!-- Data -->
+
+<!-- TODO: Make exclusive view per listType() -->
+
+@if (data.value()) {
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    @for (item of data.value(); track item.url) {
+    <div (click)="seeDetails(item)">
+        @if (this.listType() === 'characters') {
+        <h3>{{ item.aliases[0] || 'Unknown' }}</h3>
+        } @else {
+        <h3>{{ item.name || 'Unknown' }}</h3>
+        }
+    </div>
+    }
+</div>
+}

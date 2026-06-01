@@ -1,0 +1,13 @@
+<h1>Books</h1>
+@for(book of books$ | async; track book) {
+    <li>{{book.name}}</li>
+}
+<h1>Houses</h1>
+@for(house of houses$ | async; track house) {
+    <li>{{house.name}}</li>
+}
+<h1>Characters</h1>
+@for(character of characters$ | async; track character) {
+    <li>{{character.name}}</li>
+}
+

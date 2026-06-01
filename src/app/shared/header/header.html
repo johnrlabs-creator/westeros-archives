@@ -1,0 +1,10 @@
+<nav class="flex flex-wrap border-t border-[#1e1a12] px-2">
+    @for (item of menu; track item.route) {
+      <a [routerLink]="item.route" routerLinkActive="border-b-amber-400 text-amber-400"
+        class="flex items-center gap-2 px-3 h-11 text-sm text-[#8a8070]
+               border-b-2 border-transparent whitespace-nowrap
+               transition-all hover:text-amber-400">
+        {{ item.label }}
+      </a>
+    }
+  </nav>

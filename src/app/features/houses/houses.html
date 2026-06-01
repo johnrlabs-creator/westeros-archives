@@ -1,0 +1,5 @@
+@for(house of houseList(); track $index) {
+    <li>
+        <button (click)="itemClick(house)">{{house.name}}</button>
+    </li>
+}
