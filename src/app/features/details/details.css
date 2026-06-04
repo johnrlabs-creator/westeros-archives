@@ -1,0 +1,14 @@
+.disabled-add {
+    color: oklch(40.731% 0.01114 78.152);
+    &:hover {
+        border: none;
+    }
+}
+
+.disabled-remove {
+    color: oklch(40.731% 0.01114 78.152);
+    &:hover {
+        border: none;
+    }
+}
+
