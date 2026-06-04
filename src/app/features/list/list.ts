@@ -16,13 +16,18 @@ import { BASE_URL, TYPES } from '../..';
 export class List {
   router = inject(Router);
   urlUtils = inject(UrlUtils);
+
   types = TYPES;
+  currentPage = signal<number>(1);
+  pageSize = 20;
+  houses = signal<House[]>([]);
+  searchQuery = signal<string>('');
 
   listType = toSignal(
     this.router.events.pipe(
       filter((event: any) => event instanceof NavigationEnd),
       map((event: NavigationEnd) => event.url.split('/')[1]),
-    ),
+    )
   );
 
   data = httpResource<any[]>(() => ({
@@ -33,11 +38,6 @@ export class List {
       ...(this.searchQuery() && { name: this.searchQuery() }),
     },
   }));
-
-  currentPage = signal<number>(1);
-  pageSize = 20;
-  houses = signal<House[]>([]);
-  searchQuery = signal<string>('');
 
   hasNextPage = computed(() => {
     // Fetches the raw Link header from the response

@@ -8,10 +8,9 @@ import { ToastService } from '../../services/toast-service';
   styleUrl: './toast.css',
 })
 export class Toast {
-    toastService = inject(ToastService);
+  toastService = inject(ToastService);
 
   dismiss() {
-    // Access the private setter via the service
     this.toastService.show('', 'info'); // or expose a dismiss() on the service
   }
 }
