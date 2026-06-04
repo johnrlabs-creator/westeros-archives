@@ -19,6 +19,8 @@ export interface House extends BaseItem {
   ancestralWeapons: string[];
   cadetBranches: string[];
   swornMembers: string[];
+  founderName?: string;
+  swornMemberNames?: string[];
 }
 
 export interface Book extends BaseItem {
@@ -51,3 +53,9 @@ export interface Character extends BaseItem {
 }
 
 export type FavoriteType = 'houses' | 'books' | 'characters';
+
+export type Types = {
+  house: House;
+  book: Book;
+  character: Character;
+}

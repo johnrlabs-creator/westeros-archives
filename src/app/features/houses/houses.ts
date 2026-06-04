@@ -17,12 +17,12 @@ export class Houses implements OnInit {
 
   ngOnInit(): void {
     this.housesApiService.getHousesApi().subscribe(res => {
-      console.log(res);
       this.houseList.set(res)
     })
   }
 
-  itemClick(house: House) {
+  itemClick() {
     this.router.navigate(['/details'])
   }
+  
 }

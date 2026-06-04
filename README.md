@@ -67,6 +67,8 @@ ng add @ngrx/store@latest
 npm install @ngrx/store-devtools --save
 ```
 
+Note: A meta reducer is added to save the last state in session to avoid loosing data if page is accidentally refreshed.
+
 The first command sets up the NgRx store with the necessary configuration. The second command adds the Redux DevTools integration for debugging.
 
 ### Using Redux DevTools
