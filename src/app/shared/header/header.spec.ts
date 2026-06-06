@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { Header } from './header';
 import { of } from 'rxjs';
+import { provideStore } from '@ngrx/store';
+import { favoritesReducer } from '../../core/state/favorites.reducer';
 
 describe('Header', () => {
   let component: Header;
@@ -13,6 +15,7 @@ describe('Header', () => {
     await TestBed.configureTestingModule({
       imports: [Header],
       providers: [
+         provideStore({ favorites: favoritesReducer }),
         {
           provide: ActivatedRoute,
           useValue: { paramMap: of({ get: () => '1' }) },

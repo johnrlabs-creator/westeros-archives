@@ -38,4 +38,5 @@ export const favoritesReducer = createReducer(
       [itemType]: stateItems.filter((fav) => fav.url !== item.url),
     };
   }),
+  on(FavoritesActions.logout,() => initialState)
 );

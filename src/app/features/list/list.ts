@@ -6,10 +6,11 @@ import { filter, map } from 'rxjs';
 import { BaseItem, House } from '../../core/models/list.model';
 import { UrlUtils } from '../../core/utils/url.utils';
 import { BASE_URL, TYPES } from '../..';
+import { Loader } from '../../shared/loader/loader';
 
 @Component({
   selector: 'app-list',
-  imports: [],
+  imports: [Loader],
   templateUrl: './list.html',
   styleUrl: './list.css',
 })
@@ -22,12 +23,13 @@ export class List {
   pageSize = 20;
   houses = signal<House[]>([]);
   searchQuery = signal<string>('');
+  searchInput = signal('');
 
   listType = toSignal(
     this.router.events.pipe(
       filter((event: any) => event instanceof NavigationEnd),
       map((event: NavigationEnd) => event.url.split('/')[1]),
-    )
+    ),
   );
 
   data = httpResource<any[]>(() => ({
@@ -42,6 +44,7 @@ export class List {
   hasNextPage = computed(() => {
     // Fetches the raw Link header from the response
     // Returns true if 'rel="next"' exists inside the string
+    // See documentation AnApiOfIceAndFire/wiki for link header
     const linkHeader = this.data.headers()?.get('Link') || '';
     return linkHeader.includes('rel="next"');
   });
@@ -61,8 +64,14 @@ export class List {
     }
   }
 
-  search(event: Event) {
-    this.searchQuery.set((event.target as HTMLInputElement).value);
-    this.currentPage.set(1);
+  onSearch() {
+    if (this.searchInput()) {
+      this.searchQuery.set(this.searchInput());
+    }
+  }
+
+  onClearSearch() {
+    this.searchInput.set('');
+    this.searchQuery.set(this.searchInput());
   }
 }
