@@ -74,4 +74,9 @@ export class List {
     this.searchInput.set('');
     this.searchQuery.set(this.searchInput());
   }
+
+  clearSearch() {
+    this.searchInput.set('');
+    this.searchQuery.set(this.searchInput());
+  }
 }
