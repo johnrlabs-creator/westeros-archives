@@ -21,6 +21,7 @@ export interface House extends BaseItem {
   swornMembers: string[];
   founderName?: string;
   swornMemberNames?: string[];
+  swornMembersTruncated?: boolean;
 }
 
 export interface Book extends BaseItem {
@@ -33,6 +34,8 @@ export interface Book extends BaseItem {
   released: string;
   characters: string[];
   povCharacters: string[];
+  charactersTruncated?: boolean;
+  povCharactersTruncated?: boolean;
 }
 
 export interface Character extends BaseItem {
@@ -50,6 +53,8 @@ export interface Character extends BaseItem {
   povBooks: string[];
   tvSeries: string[];
   playedBy: string[];
+  allegiancesTruncated?: boolean;
+  booksTruncated?: boolean;
 }
 
 export type FavoriteType = 'houses' | 'books' | 'characters';

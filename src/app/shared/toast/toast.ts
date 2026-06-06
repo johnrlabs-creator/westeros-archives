@@ -11,6 +11,6 @@ export class Toast {
   toastService = inject(ToastService);
 
   dismiss() {
-    this.toastService.show('', 'info'); // or expose a dismiss() on the service
+    this.toastService.show('', 'info');
   }
 }

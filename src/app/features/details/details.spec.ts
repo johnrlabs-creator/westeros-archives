@@ -395,7 +395,7 @@ describe('Details', () => {
       const mockHouse = { name: 'House Stark' } as House;
 
       vi.spyOn(component['detailsApiService'], 'getHouse').mockReturnValue(of(mockHouse));
-      vi.spyOn(component, 'getHouseRelations').mockReturnValue(of(mockHouse));
+      vi.spyOn(component, 'getHouseRelations').mockReturnValue(of(mockHouse) as any);
 
       component.loadHouseDetails();
 
@@ -406,7 +406,7 @@ describe('Details', () => {
       const mockHouse = { name: 'House Stark' } as House;
       const getHouseRelationsSpy = vi
         .spyOn(component, 'getHouseRelations')
-        .mockReturnValue(of(mockHouse));
+        .mockReturnValue(of(mockHouse) as any);
 
       vi.spyOn(component['detailsApiService'], 'getHouse').mockReturnValue(of(mockHouse));
 
@@ -421,7 +421,7 @@ describe('Details', () => {
       const mockCharacter = { name: 'Jon Snow' } as Character;
 
       vi.spyOn(component['detailsApiService'], 'getCharacter').mockReturnValue(of(mockCharacter));
-      vi.spyOn(component, 'getCharacterBio').mockReturnValue(of(mockCharacter));
+      vi.spyOn(component, 'getCharacterBio').mockReturnValue(of(mockCharacter) as any);
 
       component.loadCharacterDetails();
 
@@ -432,7 +432,7 @@ describe('Details', () => {
       const mockCharacter = { name: 'Jon Snow' } as Character;
       const getCharacterBioSpy = vi
         .spyOn(component, 'getCharacterBio')
-        .mockReturnValue(of(mockCharacter));
+        .mockReturnValue(of(mockCharacter) as any);
 
       vi.spyOn(component['detailsApiService'], 'getCharacter').mockReturnValue(of(mockCharacter));
 
@@ -447,7 +447,7 @@ describe('Details', () => {
       const mockBook = { name: 'A Game of Thrones' } as Book;
 
       vi.spyOn(component['detailsApiService'], 'getBook').mockReturnValue(of(mockBook));
-      vi.spyOn(component, 'getBookInfo').mockReturnValue(of(mockBook));
+      vi.spyOn(component, 'getBookInfo').mockReturnValue(of(mockBook) as any);
 
       component.loadBookDetails();
 
@@ -456,7 +456,7 @@ describe('Details', () => {
 
     it('should call getBookInfo with the fetched book', () => {
       const mockBook = { name: 'A Game of Thrones' } as Book;
-      const getBookInfoSpy = vi.spyOn(component, 'getBookInfo').mockReturnValue(of(mockBook));
+      const getBookInfoSpy = vi.spyOn(component, 'getBookInfo').mockReturnValue(of(mockBook) as any);
 
       vi.spyOn(component['detailsApiService'], 'getBook').mockReturnValue(of(mockBook));
 

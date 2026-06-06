@@ -11,13 +11,14 @@ import { KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { UrlUtils } from '../../core/utils/url.utils';
 import { ToastService } from '../../services/toast-service';
 import { Location } from '@angular/common';
+import { Loader } from '../../shared/loader/loader';
 
 // Limit more info to display to avoid heavy load on http requests
 const MORE_INFO_LIMIT = 5;
 
 @Component({
   selector: 'app-details',
-  imports: [KeyValuePipe, TitleCasePipe],
+  imports: [KeyValuePipe, TitleCasePipe, Loader],
   templateUrl: './details.html',
   styleUrl: './details.css',
 })
@@ -35,6 +36,7 @@ export class Details implements OnInit {
   character = signal<Character>(<Character>{});
   book = signal<Book>(<Book>{});
   showToast = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
 
   isAddedToFavorites: boolean = false;
 
@@ -52,6 +54,7 @@ export class Details implements OnInit {
   }
 
   getItemDetails() {
+    this.isLoading.set(true);
     switch (this.listType()) {
       case TYPES.HOUSES:
         return this.loadHouseDetails();
@@ -69,7 +72,10 @@ export class Details implements OnInit {
         switchMap((house) => this.getHouseRelations(house)),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((house) => this.house.set(house));
+      .subscribe((house) => {
+        this.house.set(house);
+        this.isLoading.set(false);
+      });
   }
 
   loadCharacterDetails() {
@@ -79,7 +85,10 @@ export class Details implements OnInit {
         switchMap((character) => this.getCharacterBio(character)),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((character) => this.character.set(character));
+      .subscribe((character) => {
+        this.character.set(character);
+        this.isLoading.set(false);
+      });
   }
 
   loadBookDetails() {
@@ -91,6 +100,7 @@ export class Details implements OnInit {
       )
       .subscribe((book) => {
         this.book.set(book as Book);
+        this.isLoading.set(false);
       });
   }
 
@@ -105,6 +115,7 @@ export class Details implements OnInit {
       map(({ swornMembers, founder, heir, currentLord, overlord }) => ({
         ...house,
         swornMembers: swornMembers.map((m) => m?.name ?? 'Unknown'),
+        swornMembersTruncated: house.swornMembers.length > MORE_INFO_LIMIT,
         founder: founder?.name ?? 'Unknown',
         heir: heir?.name ?? 'Unknown',
         currentLord: currentLord?.name ?? 'Unknown',
@@ -117,11 +128,15 @@ export class Details implements OnInit {
     return forkJoin({
       allegiances: this.getCharacters(character.allegiances),
       books: this.getBooks(character.books),
+      spouse: this.getCharacter(character.spouse),
     }).pipe(
-      map(({ allegiances, books }) => ({
+      map(({ allegiances, books, spouse }) => ({
         ...character,
         allegiances: allegiances.map((m) => m?.name ?? 'Unknown'),
         books: books.map((m) => m?.name ?? 'Unknown'),
+        allegiancesTruncated: character.allegiances.length > MORE_INFO_LIMIT,
+        booksTruncated: character.books.length > MORE_INFO_LIMIT,
+        spouse: spouse?.name ?? 'Unknown',
       })),
     );
   }
@@ -135,6 +150,8 @@ export class Details implements OnInit {
         ...book,
         characters: characters.map((m) => m?.name ?? 'Unknown'),
         povCharacters: povCharacters.map((m) => m?.name ?? 'Unknown'),
+        charactersTruncated: book.characters.length > MORE_INFO_LIMIT,
+        povCharactersTruncated: book.povCharacters.length > MORE_INFO_LIMIT,
       })),
     );
   }

@@ -91,3 +91,6 @@ For more information on using the Angular CLI, including detailed command refere
 Note: A meta reducer is added to save the last state in session to avoid loosing data if page is accidentally refreshed.
 
 Note: Search Query should be case sensitive and match the exact name of character, book or house. This is a limitation to the api (https://anapioficeandfire.com/)
+
+## Backend
+An ExpressJS backend is required to run locally to enable login and to access the app: https://github.com/johnrlabs-creator/westeros-arch-backend

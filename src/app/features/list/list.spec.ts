@@ -88,21 +88,6 @@ describe('List', () => {
     });
   });
 
-  describe('search', () => {
-    it('should set searchQuery from input event', () => {
-      const event = { target: { value: 'Stark' } } as unknown as Event;
-      component.search(event);
-      expect(component.searchQuery()).toBe('Stark');
-    });
-
-    it('should reset currentPage to 1 on search', () => {
-      component.currentPage.set(5);
-      const event = { target: { value: 'Stark' } } as unknown as Event;
-      component.search(event);
-      expect(component.currentPage()).toBe(1);
-    });
-  });
-
   describe('hasNextPage', () => {
     it('should return true when Link header contains rel="next"', () => {
       const mockHeaders = new HttpHeaders({
@@ -128,4 +113,23 @@ describe('List', () => {
       expect(component.hasNextPage()).toBe(false);
     });
   });
+  describe('onClearSearch', () => {
+  it('should clear searchInput', () => {
+    component.searchInput.set('Stark');
+    component.onClearSearch();
+    expect(component.searchInput()).toBe('');
+  });
+
+  it('should clear searchQuery', () => {
+    component.searchQuery.set('Stark');
+    component.onClearSearch();
+    expect(component.searchQuery()).toBe('');
+  });
+
+  it('should sync searchQuery with searchInput after clearing', () => {
+    component.searchInput.set('Lannister');
+    component.onClearSearch();
+    expect(component.searchQuery()).toBe(component.searchInput());
+  });
+});
 });
